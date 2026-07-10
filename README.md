@@ -23,6 +23,14 @@ Banners fire from a tiny re-skinned [`terminal-notifier`](https://github.com/jul
 
 ## Install
 
+One-liner (no clone needed):
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/Priyans-hu/claude-code-notify/main/install.sh | bash
+```
+
+Or from a clone:
+
 ```bash
 ./install.sh
 ```

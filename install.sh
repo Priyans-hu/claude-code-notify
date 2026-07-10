@@ -1,10 +1,14 @@
 #!/usr/bin/env bash
 # Installs claude-code-notify: copies the hook files into ~/.claude/hooks and
 # merges the Stop / StopFailure / Notification hooks into ~/.claude/settings.json.
+#
+# From a clone:   ./install.sh
+# Straight curl:  curl -fsSL https://raw.githubusercontent.com/Priyans-hu/claude-code-notify/main/install.sh | bash
+#
 # Idempotent — safe to re-run. Backs up settings.json before touching it.
 set -euo pipefail
 
-SRC_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_URL="https://github.com/Priyans-hu/claude-code-notify.git"
 CLAUDE_DIR="${CLAUDE_CONFIG_DIR:-$HOME/.claude}"
 HOOKS_DIR="$CLAUDE_DIR/hooks"
 SETTINGS="$CLAUDE_DIR/settings.json"
@@ -14,6 +18,17 @@ SETTINGS="$CLAUDE_DIR/settings.json"
 command -v jq >/dev/null 2>&1 || { echo "error: jq is required  ->  brew install jq"; exit 1; }
 
 echo "==> Installing claude-code-notify into $CLAUDE_DIR"
+
+# ── locate source files: use a local checkout if present, else fetch the repo ─
+SRC_DIR="$(cd "$(dirname "${BASH_SOURCE[0]:-}")" 2>/dev/null && pwd || true)"
+if [ -z "${SRC_DIR:-}" ] || [ ! -d "$SRC_DIR/hooks" ]; then
+  command -v git >/dev/null 2>&1 || { echo "error: git is required to fetch the files"; exit 1; }
+  TMP="$(mktemp -d)"
+  trap 'rm -rf "$TMP"' EXIT
+  echo "    fetching files from $REPO_URL"
+  git clone --depth 1 -q "$REPO_URL" "$TMP/repo"
+  SRC_DIR="$TMP/repo"
+fi
 
 # ── 1. copy hook files ───────────────────────────────────────────────────────
 mkdir -p "$HOOKS_DIR"
