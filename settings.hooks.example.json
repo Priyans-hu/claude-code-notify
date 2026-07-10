@@ -1,0 +1,13 @@
+{
+  "hooks": {
+    "Stop": [
+      { "hooks": [ { "type": "command", "command": "bash ~/.claude/hooks/claude-notify.sh", "async": true } ] }
+    ],
+    "StopFailure": [
+      { "hooks": [ { "type": "command", "command": "bash ~/.claude/hooks/claude-notify.sh", "async": true } ] }
+    ],
+    "Notification": [
+      { "hooks": [ { "type": "command", "command": "bash ~/.claude/hooks/claude-notify.sh", "async": true } ] }
+    ]
+  }
+}
