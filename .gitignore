@@ -1,3 +1,1 @@
 .DS_Store
-# transient runtime file written by the hook before firing the banner
-hooks/.notify-payload
