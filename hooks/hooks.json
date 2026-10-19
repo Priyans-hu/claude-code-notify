@@ -1,0 +1,14 @@
+{
+  "description": "macOS banner + sound on Stop, StopFailure and Notification",
+  "hooks": {
+    "Stop": [
+      { "hooks": [ { "type": "command", "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/claude-notify.sh\"", "async": true } ] }
+    ],
+    "StopFailure": [
+      { "hooks": [ { "type": "command", "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/claude-notify.sh\"", "async": true } ] }
+    ],
+    "Notification": [
+      { "hooks": [ { "type": "command", "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/claude-notify.sh\"", "async": true } ] }
+    ]
+  }
+}

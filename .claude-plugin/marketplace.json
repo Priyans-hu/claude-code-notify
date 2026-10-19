@@ -1,0 +1,12 @@
+{
+  "name": "claude-code-notify",
+  "description": "macOS banner and sound hooks for Claude Code",
+  "owner": { "name": "Priyans-hu" },
+  "plugins": [
+    {
+      "name": "cc-notify",
+      "source": "./",
+      "description": "macOS banner and sound when a Claude Code turn finishes, fails, or waits on you"
+    }
+  ]
+}

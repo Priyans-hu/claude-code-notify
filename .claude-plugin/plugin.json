@@ -1,0 +1,11 @@
+{
+  "name": "cc-notify",
+  "displayName": "claude-code-notify",
+  "version": "1.0.0",
+  "description": "macOS banner and sound when a Claude Code turn finishes, fails, or waits on you",
+  "author": { "name": "Priyans-hu" },
+  "homepage": "https://github.com/Priyans-hu/claude-code-notify",
+  "repository": "https://github.com/Priyans-hu/claude-code-notify",
+  "license": "MIT",
+  "keywords": ["notifications", "macos", "hooks", "sound"]
+}

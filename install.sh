@@ -32,7 +32,7 @@ fi
 
 # ── 1. copy hook files ───────────────────────────────────────────────────────
 mkdir -p "$HOOKS_DIR"
-cp -R "$SRC_DIR/hooks/." "$HOOKS_DIR/"
+cp -R "$SRC_DIR/hooks/claude-notify.sh" "$SRC_DIR/hooks/ClaudeNotify.app" "$HOOKS_DIR/"
 chmod +x "$HOOKS_DIR/claude-notify.sh"
 echo "    copied hook files -> $HOOKS_DIR"
 

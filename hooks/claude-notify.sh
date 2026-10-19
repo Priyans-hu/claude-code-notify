@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# ~/.claude/hooks/claude-notify.sh
-# macOS banner + sound for Claude Code lifecycle events.
-# Wired from ~/.claude/settings.json ("hooks"): Stop / StopFailure / Notification [ / SubagentStop ].
+# claude-notify.sh: macOS banner + sound for Claude Code lifecycle events.
+# Wired from ~/.claude/settings.json ("hooks") or the plugin's hooks/hooks.json:
+# Stop / StopFailure / Notification [ / SubagentStop ].
 # Reads the hook's JSON payload on stdin, then picks an emoji + sound + label per event.
 #
 # ── CUSTOMISE ────────────────────────────────────────────────────────────────
@@ -53,14 +53,12 @@ fi
 # Sound in the background so the hook never blocks.
 afplay "/System/Library/Sounds/${sound}.aiff" >/dev/null 2>&1 &
 
-# Fire the banner from ClaudeNotify.app — a tiny bundle carrying the real Claude icon.
-# It reads the payload file (UTF-8), sidestepping osascript's icon + encoding limits.
-NOTIFIER="$HOME/.claude/hooks/ClaudeNotify.app"
-if [ -d "$NOTIFIER" ]; then
-  printf '%s\n%s\n%s' "$title" "$subtitle" "$detail" > "$HOME/.claude/hooks/.notify-payload"
-  open -n -a "$NOTIFIER"
-else
-  # Fallback: plain osascript (shows the generic "Script Editor" icon).
+# Fire the banner from ClaudeNotify.app (next to this script), a terminal-notifier
+# bundle carrying the real Claude icon. Falls back to plain osascript (generic
+# "Script Editor" icon) if the bundle is missing or macOS refuses to open it.
+NOTIFIER="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/ClaudeNotify.app"
+if ! { [ -d "$NOTIFIER" ] && open -n -a "$NOTIFIER" --args \
+         -title "$title" -subtitle "$subtitle" -message "${detail:- }" >/dev/null 2>&1; }; then
   LC_ALL=en_US.UTF-8 osascript - "$title" "$subtitle" "$detail" >/dev/null 2>&1 <<'APPLESCRIPT'
 on run argv
   display notification (item 3 of argv) with title (item 1 of argv) subtitle (item 2 of argv)
